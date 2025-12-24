@@ -9,6 +9,18 @@ export const localTimeZone = moment.tz.guess()
 
 export const displayDatetimeFormat = 'YYYY-MM-DD HH:mm:ss'
 
+const datetimeFormatRegCache = new Map<string, RegExp>();
+
+function getDatetimeFormatReg(format: string) {
+    const cached = datetimeFormatRegCache.get(format);
+    if (cached) {
+        return cached;
+    }
+    const created = datetimeFormatToReg(format);
+    datetimeFormatRegCache.set(format, created);
+    return created;
+}
+
 export function exifDateTimeToMoment(exifDateTime: ExifDateTime, exifDateTimeFormat: string) {
     const datetime = exifDateTime.toDateTime().toJSDate()
     return moment(datetime)
@@ -21,9 +33,9 @@ export function compareOptionToDatetime(compareOptions: string[], exif: Tags, fi
         return null
     }
     const fileName = exif.FileName?.toString() || ''
-    const matched = fileNameFormat.find(format => fileName.match(datetimeFormatToReg(format)))
-    const matchedDateTime = fileName.match(datetimeFormatToReg(matched || ''))?.[0]
-    const dateTimeFromFileName = !!matchedDateTime && moment(matchedDateTime, matched || undefined)
+    const matched = fileNameFormat.find(format => getDatetimeFormatReg(format).test(fileName))
+    const matchedDateTime = matched ? fileName.match(getDatetimeFormatReg(matched))?.[0] : undefined
+    const dateTimeFromFileName = matchedDateTime ? moment(matchedDateTime, matched || undefined) : null
     if (!dateTimeFromFileName || (dateTimeKey === 'FileName' && !dateTimeFromFileName?.isValid())) {
         devError('获取失败，文件名格式错误', fileNameFormat, fileName)
         return null

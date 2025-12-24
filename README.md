@@ -74,6 +74,10 @@ node dist/index.js process <file-path> -o <output-path>
 - **CLI 框架**: Commander.js
 - **构建工具**: TypeScript Compiler
 
+## 变更记录
+
+- 2025-12-24：内部性能与类型优化，详见 CHANGELOG.md。
+
 ## 许可证
 
 MIT

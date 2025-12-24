@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import i18next, { type TOptions } from 'i18next';
 import Backend from 'i18next-fs-backend';
 import * as path from 'path';
 import { devError, devLog } from '../utils/devLog';
@@ -98,7 +98,7 @@ export class I18nConfig {
   /**
    * 翻译函数
    */
-  public t(key: string, options?: any): string {
+  public t(key: string, options?: TOptions): string {
     if (!this.initialized) {
       console.warn('i18n not initialized, returning key');
       return key;
@@ -109,7 +109,7 @@ export class I18nConfig {
 }
 
 // 创建全局翻译函数
-export const t = (key: string, options?: any): string => {
+export const t = (key: string, options?: TOptions): string => {
   return I18nConfig.getInstance().t(key, options);
 };
 
