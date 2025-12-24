@@ -10,7 +10,6 @@ import { unitOfTime } from 'moment-timezone'
 import { ExifDateTime, Tags } from 'exiftool-vendored';
 import { DateTime } from 'luxon';
 import chalk from 'chalk';
-import fs from 'fs'
 
 // 处理图片日期
 export async function processImageDatetime(filePath: string, options: {

@@ -1,7 +1,7 @@
 // 扫描指定文件夹里面的文件
 import * as fs from 'fs';
 import * as path from 'path';
-import { devError, devInfo, devLog } from '../utils/devLog';
+import { devInfo, devLog } from '../utils/devLog';
 import { FileFilter } from '../utils/fileFilter';
 import ora from 'ora';
 import { t } from '../i18n/config';

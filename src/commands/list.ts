@@ -1,4 +1,3 @@
-import path from 'path';
 import { scan } from '../fileMethods/scan';
 
 export async function listFiles(filePath: string, filterOptions: string, recursive: boolean) {
